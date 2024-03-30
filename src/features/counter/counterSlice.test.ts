@@ -9,12 +9,14 @@ import {
   selectCount,
 } from "./counterSlice"
 
-interface LocalTestContext {
-  store: AppStore
+declare module "vitest" {
+  export interface TestContext {
+    store: AppStore
+  }
 }
 
-describe<LocalTestContext>("counter reducer", it => {
-  beforeEach<LocalTestContext>(context => {
+describe("counter reducer", it => {
+  beforeEach(context => {
     const initialState: CounterSliceState = {
       value: 3,
       status: "idle",
