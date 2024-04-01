@@ -1,11 +1,17 @@
 import type { FC } from "react"
 import type { Order } from "../../../api/fake"
 import { ProCard } from "@ant-design/pro-components"
-import { Flex, Card as AntCard, Space, Typography } from "antd"
+import {
+  Flex,
+  Card as AntCard,
+  Space,
+  Typography,
+  Button as AntButton,
+} from "antd"
 import styled from "styled-components"
 import type { TextProps } from "antd/lib/typography/Text"
-import { selectType } from "../ordersListSlice"
-import { useAppSelector } from "../../../store/hooks"
+import type { ButtonProps } from "antd/lib/button"
+import { formatedDate } from "../../../utils/date"
 
 type Props = {
   order: Order
@@ -15,11 +21,12 @@ const { Text: AntText } = Typography
 const { Divider: AntDivider } = ProCard
 
 const Card = styled(AntCard)`
+  min-width: 547px;
   margin: 8px 16px;
 `
 
 const Divider = styled(AntDivider)`
-  margin-block: 0;
+  margin-inline: 0;
   background-color: #e7e7e7;
 `
 
@@ -30,58 +37,74 @@ const Text: FC<TextProps> = styled(AntText)`
   }
 `
 
-export const OrderCard: FC<Props> = ({ order }) => {
-  const type = useAppSelector(selectType)
-  const isGrid = type === "grid"
+const Button: FC<ButtonProps> = styled(AntButton)`
+  &&& {
+    width: 178px;
+    height: 50px;
+    background-color: #ff9a19;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
 
+  &&&&:hover {
+    background-color: #ff9a19c2;
+  }
+`
+
+export const OrderCard: FC<Props> = ({ order }) => {
   return (
     <Card bordered hoverable>
-      <Flex vertical={isGrid} gap="middle">
-        <Flex vertical gap="middle" style={{ minWidth: 320 }}>
-          <Space direction="horizontal">
-            <Text strong>{order.from.City}</Text>
-            <Text type="secondary">{order.from.Region}</Text>
-          </Space>
-          <Space direction="horizontal">
-            <Text strong>{order.to.City}</Text>
-            <Text type="secondary">{order.to.Region}</Text>
-          </Space>
-          <Space direction="horizontal">
-            <Text type="secondary">Расстояние:</Text>
-            <Text strong>{`${order.distance.basic} км`}</Text>
-            {order.distance.plus !== 0 && (
-              <Text strong type="danger">
-                {`+${order.distance.plus} пунктов`}{" "}
-              </Text>
-            )}
-          </Space>
+      {order._id}
+      <Flex vertical gap="middle">
+        <Flex gap="middle" justify="space-between">
+          <Flex vertical gap="small">
+            <Space direction="vertical" size={4}>
+              <Text strong>{order.from.City}</Text>
+              <Text type="secondary">{order.from.Region}</Text>
+            </Space>
+            <Space direction="vertical" size={4}>
+              <Text strong>{order.to.City}</Text>
+              <Text type="secondary">{order.to.Region}</Text>
+            </Space>
+            <Space direction="horizontal">
+              <Text type="secondary">Расстояние:</Text>
+              <Text strong>{`${order.distance.basic} км`}</Text>
+              {order.distance.plus !== 0 && (
+                <Text strong type="danger">
+                  {`+${order.distance.plus} пунктов`}{" "}
+                </Text>
+              )}
+            </Space>
+          </Flex>
+
+          <Text type="secondary">{`№${order.number}`}</Text>
         </Flex>
 
-        <Divider type={isGrid ? "horizontal" : "vertical"} />
+        <Divider type="horizontal" />
 
-        <Flex gap="middle" justify="space-between" style={{ width: "100%" }}>
-          <Flex vertical gap="middle">
+        <Flex justify="space-between">
+          <Space direction="vertical" size="middle">
             <Text strong>{order.cargo}</Text>
             <Text type="secondary">{`${order.weight} т. / ${order.size.min}-${order.size.max} м3`}</Text>
-            <Text type="secondary">{order.number}</Text>
-          </Flex>
+          </Space>
 
-          <Flex vertical gap="middle">
-            <Text type="secondary">{`№${order.number}`}</Text>
+          <Space direction="vertical" size="middle" align="end">
+            <Text strong>{formatedDate(order.date)}</Text>
             <Text type="secondary">{order.type}</Text>
-          </Flex>
+          </Space>
         </Flex>
 
-        <Divider type={isGrid ? "horizontal" : "vertical"} />
+        <Divider type="horizontal" />
 
-        <Flex
-          vertical
-          gap="middle"
-          align="center"
-          style={{ minWidth: 180, alignSelf: "center" }}
-        >
-          <Text strong>{`${order.price.full} ₽`}</Text>
-          <Text type="secondary">{`ГСМ: ${order.price.fuel} ₽`}</Text>
+        <Flex align="center" justify="space-between">
+          <Flex vertical gap="middle">
+            <Text strong>{`${order.price.full} ₽`}</Text>
+            <Text type="secondary">{`ГСМ: ${order.price.fuel} ₽`}</Text>
+          </Flex>
+
+          <Button type="primary" danger>
+            Откликнуться
+          </Button>
         </Flex>
       </Flex>
     </Card>
