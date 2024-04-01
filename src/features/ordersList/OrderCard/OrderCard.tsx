@@ -1,12 +1,12 @@
 import type { FC } from "react"
 import type { Order } from "../../../api/fake"
-import { ProCard } from "@ant-design/pro-components"
 import {
   Flex,
   Card as AntCard,
   Space,
   Typography,
   Button as AntButton,
+  Divider as AntDivider,
 } from "antd"
 import styled from "styled-components"
 import type { TextProps } from "antd/lib/typography/Text"
@@ -18,7 +18,6 @@ type Props = {
 }
 
 const { Text: AntText } = Typography
-const { Divider: AntDivider } = ProCard
 
 const Card = styled(AntCard)`
   min-width: 547px;
@@ -54,7 +53,6 @@ const Button: FC<ButtonProps> = styled(AntButton)`
 export const OrderCard: FC<Props> = ({ order }) => {
   return (
     <Card bordered hoverable>
-      {order._id}
       <Flex vertical gap="middle">
         <Flex gap="middle" justify="space-between">
           <Flex vertical gap="small">

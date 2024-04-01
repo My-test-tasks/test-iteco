@@ -1,23 +1,31 @@
+import styled from "styled-components"
+import {
+  Flex,
+  Card as AntCard,
+  Space,
+  Typography,
+  Divider as AntDivider,
+} from "antd"
+
+import {} from "antd"
+import { formatedDate } from "../../../utils/date"
+
 import type { FC } from "react"
 import type { Order } from "../../../api/fake"
-import { ProCard } from "@ant-design/pro-components"
-import { Flex, Card as AntCard, Space, Typography } from "antd"
-import styled from "styled-components"
 import type { TextProps } from "antd/lib/typography/Text"
-import { formatedDate } from "../../../utils/date"
 
 type Props = {
   order: Order
 }
 
 const { Text: AntText } = Typography
-const { Divider: AntDivider } = ProCard
 
 const Card = styled(AntCard)`
   margin: 8px 16px;
 `
 
 const Divider = styled(AntDivider)`
+  height: auto;
   margin-block: 0;
   background-color: #e7e7e7;
 `
@@ -32,7 +40,6 @@ const Text: FC<TextProps> = styled(AntText)`
 export const OrderListItem: FC<Props> = ({ order }) => {
   return (
     <Card bordered hoverable>
-      {order._id}
       <Flex gap="middle">
         <Flex vertical gap="middle" style={{ minWidth: 320 }}>
           <Space direction="horizontal">
