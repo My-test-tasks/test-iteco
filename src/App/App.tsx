@@ -1,21 +1,17 @@
-import { useState } from "react"
-import { api } from "../api/fake"
-import styles from "./App.module.css"
+import { OrderList } from "../features/ordersList"
+import styled from "styled-components"
+
+const AppWrapper = styled("div")`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`
 
 export const App = () => {
-  const [offset, setOffset] = useState<number | undefined>(0)
-
-  const handleClick = () => {
-    const limit = 100
-
-    const data = api.getOrders(limit, offset)
-
-    setOffset(data.nextOffset)
-  }
-
   return (
-    <div className={styles.app}>
-      <button onClick={handleClick}>getOrders</button>
-    </div>
+    <AppWrapper>
+      <OrderList />
+    </AppWrapper>
   )
 }

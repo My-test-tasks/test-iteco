@@ -1,4 +1,5 @@
 import { fakerRU as faker } from "@faker-js/faker"
+import { API } from "./config"
 
 type City = {
   City: string
@@ -20,7 +21,7 @@ type Price = {
   fuel: number
 }
 
-interface Order {
+export interface Order {
   _id: string
   number: string
   from: City
@@ -30,6 +31,7 @@ interface Order {
   weight: number
   size: Size
   date: string
+  type: string
   price: Price
 }
 
@@ -63,6 +65,7 @@ function createRandomOrder(id?: number): Order {
       max: faker.number.int({ min: 1, max: 30 }),
     },
     date: faker.date.soon({ days: 60 }).toString(),
+    type: "Тент / полная",
     price: {
       full: faker.number.float({ min: 1, max: 100, multipleOf: 0.05 }) * 1000,
       fuel: faker.number.float({ min: 1, max: 10, multipleOf: 0.25 }) * 1000,
@@ -76,7 +79,7 @@ const createOrders = (amount = 10000) => {
   const start = Date.now()
 
   for (let i = 0; i < amount; i++) {
-    const order = createRandomOrder(i)
+    const order = createRandomOrder(i) // id по порядку для дебага
     result.push(order)
   }
 
@@ -88,7 +91,7 @@ const createOrders = (amount = 10000) => {
 
 export const api = {
   _orders: createOrders(),
-  getOrders(limit = 100, offset = 0) {
+  getOrders(limit = API.limit, offset = 0) {
     const total = this._orders.length
     const nextOffset = offset + limit < total ? offset + limit : null
     const sliceEnd = nextOffset ?? total
@@ -103,8 +106,8 @@ export const api = {
       result.nextOffset = nextOffset
     }
 
-    console.log(result)
-
-    return result
+    return new Promise<Result>(resolve =>
+      setTimeout(() => resolve(result), 2000),
+    )
   },
 }

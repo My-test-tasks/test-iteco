@@ -3,18 +3,35 @@ import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
 import { App } from "./App/App"
 import { store } from "./store"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ConfigProvider } from "antd"
+
 import "./assets/styles/main.css"
 
 const container = document.getElementById("root")
+
+const queryClient = new QueryClient()
 
 if (container) {
   const root = createRoot(container)
 
   root.render(
     <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <ConfigProvider
+            theme={{
+              token: {
+                fontSize: 16,
+                colorText: "#404140",
+              },
+            }}
+          >
+            {" "}
+            <App />
+          </ConfigProvider>
+        </Provider>
+      </QueryClientProvider>
     </React.StrictMode>,
   )
 } else {
