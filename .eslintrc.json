@@ -3,7 +3,8 @@
     "eslint:recommended",
     "react-app",
     "plugin:react/jsx-runtime",
-    "prettier"
+    "prettier",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": true, "tsconfigRootDir": "./" },
@@ -26,7 +27,10 @@
           }
         ]
       }
-    ]
+    ],
+    "@tanstack/query/exhaustive-deps": "error",
+    "@tanstack/query/no-rest-destructuring": "warn",
+    "@tanstack/query/stable-query-client": "error"
   },
   "overrides": [
     { "files": ["*.{c,m,}{t,j}s", "*.{t,j}sx"] },
