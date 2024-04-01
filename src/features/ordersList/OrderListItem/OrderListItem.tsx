@@ -40,7 +40,6 @@ const Text: FC<TextProps> = styled(AntText)`
 export const OrderListItem: FC<Props> = ({ order }) => {
   return (
     <Card bordered hoverable>
-      {order._id}
       <Flex gap="middle">
         <Flex vertical gap="middle" style={{ minWidth: 320 }}>
           <Space direction="horizontal">

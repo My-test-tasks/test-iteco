@@ -53,7 +53,6 @@ const Button: FC<ButtonProps> = styled(AntButton)`
 export const OrderCard: FC<Props> = ({ order }) => {
   return (
     <Card bordered hoverable>
-      {order._id}
       <Flex vertical gap="middle">
         <Flex gap="middle" justify="space-between">
           <Flex vertical gap="small">
