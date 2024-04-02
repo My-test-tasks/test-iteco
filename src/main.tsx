@@ -5,6 +5,7 @@ import { App } from "./App/App"
 import { store } from "./store"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ConfigProvider } from "antd"
+import locale from "antd/locale/ru_RU"
 
 import "./assets/styles/main.css"
 
@@ -20,6 +21,7 @@ if (container) {
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <ConfigProvider
+            locale={locale}
             theme={{
               token: {
                 fontSize: 16,
@@ -27,7 +29,6 @@ if (container) {
               },
             }}
           >
-            {" "}
             <App />
           </ConfigProvider>
         </Provider>

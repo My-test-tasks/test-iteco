@@ -1,9 +1,9 @@
 import { Flex, Button } from "antd"
 import { AppstoreOutlined, MenuOutlined } from "@ant-design/icons"
-import { useAppDispatch, useAppSelector } from "../../../store/hooks"
-import { selectType, setType } from "../ordersListSlice"
+import { useAppDispatch, useAppSelector } from "../../../../store/hooks"
+import { selectType, setType } from "../../ordersListSlice"
 
-export const OrdersListHeader = () => {
+export const Header = () => {
   const dispatch = useAppDispatch()
   const type = useAppSelector(selectType)
 
@@ -16,7 +16,7 @@ export const OrdersListHeader = () => {
   }
 
   return (
-    <Flex gap="small" justify="flex-end" style={{ padding: 16 }}>
+    <Flex gap="small" justify="flex-end">
       <Button
         type={type === "list" ? "primary" : "default"}
         icon={<MenuOutlined />}
