@@ -7,11 +7,13 @@ import {
   Typography,
   Button as AntButton,
   Divider as AntDivider,
+  Tooltip,
 } from "antd"
 import styled from "styled-components"
 import type { TextProps } from "antd/lib/typography/Text"
 import type { ButtonProps } from "antd/lib/button"
 import { formatedDate } from "../../../utils/date"
+import { QuestionCircleOutlined } from "@ant-design/icons"
 
 type Props = {
   order: Order
@@ -21,7 +23,7 @@ const { Text: AntText } = Typography
 
 const Card = styled(AntCard)`
   min-width: 547px;
-  margin: 8px 16px;
+  margin: 8px 0;
 `
 
 const Divider = styled(AntDivider)`
@@ -48,6 +50,10 @@ const Button: FC<ButtonProps> = styled(AntButton)`
   &&&&:hover {
     background-color: #ff9a19c2;
   }
+`
+const QuestionIcon = styled(QuestionCircleOutlined)`
+  width: 14px;
+  height: 14px;
 `
 
 export const OrderCard: FC<Props> = ({ order }) => {
@@ -97,7 +103,10 @@ export const OrderCard: FC<Props> = ({ order }) => {
         <Flex align="center" justify="space-between">
           <Flex vertical gap="middle">
             <Text strong>{`${order.price.full} ₽`}</Text>
-            <Text type="secondary">{`ГСМ: ${order.price.fuel} ₽`}</Text>
+            <Tooltip title="Дополнительно, на ГСМ">
+              <QuestionIcon />
+              <Text type="secondary">{` ГСМ: ${order.price.fuel} ₽`}</Text>
+            </Tooltip>
           </Flex>
 
           <Button type="primary" danger>

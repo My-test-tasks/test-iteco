@@ -5,6 +5,7 @@ import {
   Space,
   Typography,
   Divider as AntDivider,
+  Tooltip,
 } from "antd"
 
 import {} from "antd"
@@ -13,6 +14,7 @@ import { formatedDate } from "../../../utils/date"
 import type { FC } from "react"
 import type { Order } from "../../../api/fake"
 import type { TextProps } from "antd/lib/typography/Text"
+import { QuestionCircleOutlined } from "@ant-design/icons"
 
 type Props = {
   order: Order
@@ -21,7 +23,7 @@ type Props = {
 const { Text: AntText } = Typography
 
 const Card = styled(AntCard)`
-  margin: 8px 16px;
+  margin: 8px 0;
 `
 
 const Divider = styled(AntDivider)`
@@ -35,6 +37,11 @@ const Text: FC<TextProps> = styled(AntText)`
     color: ${props => props.type === "secondary" && "#818281"};
     color: ${props => props.type === "danger" && "#017B59"};
   }
+`
+
+const QuestionIcon = styled(QuestionCircleOutlined)`
+  width: 14px;
+  height: 14px;
 `
 
 export const OrderListItem: FC<Props> = ({ order }) => {
@@ -88,7 +95,10 @@ export const OrderListItem: FC<Props> = ({ order }) => {
           style={{ minWidth: 180, alignSelf: "center" }}
         >
           <Text strong>{`${order.price.full} ₽`}</Text>
-          <Text type="secondary">{`ГСМ: ${order.price.fuel} ₽`}</Text>
+          <Tooltip title="Дополнительно, на ГСМ">
+            <QuestionIcon />
+            <Text type="secondary">{` ГСМ: ${order.price.fuel} ₽`}</Text>
+          </Tooltip>
         </Flex>
       </Flex>
     </Card>

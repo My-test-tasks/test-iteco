@@ -1,7 +1,7 @@
 import { forwardRef } from "react"
 import type { GridComponents } from "react-virtuoso"
 
-export const OrdersListGridView: GridComponents["List"] = forwardRef(
+export const GridView: GridComponents["List"] = forwardRef(
   ({ style, children, ...props }, ref) => (
     <div
       ref={ref}
@@ -10,6 +10,7 @@ export const OrdersListGridView: GridComponents["List"] = forwardRef(
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
+        gap: 15,
         ...style,
       }}
     >
