@@ -1,9 +1,8 @@
 import { fakerRU as faker } from "@faker-js/faker"
-import { API } from "./config"
 
 type City = {
-  City: string
-  Region: string
+  city: string
+  region: string
 }
 
 type Distance = {
@@ -36,23 +35,20 @@ export interface Order {
 }
 
 interface Result {
-  total: number
-  limit: number
-  nextOffset?: number
   orders: Order[]
 }
 
-function createRandomOrder(id?: number): Order {
+function createRandomOrder(): Order {
   return {
-    _id: String(id) ?? faker.string.uuid(),
+    _id: faker.string.uuid(),
     number: `А${faker.string.numeric(7)}`,
     from: {
-      City: faker.location.city(),
-      Region: faker.location.county(),
+      city: faker.location.city(),
+      region: faker.location.county(),
     },
     to: {
-      City: faker.location.city(),
-      Region: faker.location.county(),
+      city: faker.location.city(),
+      region: faker.location.county(),
     },
     distance: {
       basic: faker.number.int({ min: 10, max: 999 }),
@@ -79,7 +75,7 @@ const createOrders = (amount = 10000) => {
   const start = Date.now()
 
   for (let i = 0; i < amount; i++) {
-    const order = createRandomOrder(i) // id по порядку для дебага
+    const order = createRandomOrder()
     result.push(order)
   }
 
@@ -91,19 +87,9 @@ const createOrders = (amount = 10000) => {
 
 export const api = {
   _orders: createOrders(),
-  getOrders(limit = API.limit, offset = 0) {
-    const total = this._orders.length
-    const nextOffset = offset + limit < total ? offset + limit : null
-    const sliceEnd = nextOffset ?? total
-
+  getOrders() {
     const result: Result = {
-      total,
-      limit,
-      orders: this._orders.slice(offset, sliceEnd),
-    }
-
-    if (nextOffset) {
-      result.nextOffset = nextOffset
+      orders: this._orders,
     }
 
     return new Promise<Result>(resolve =>
