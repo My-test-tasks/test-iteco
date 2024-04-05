@@ -1,12 +1,7 @@
-import { API } from "../../api/config"
 import { api } from "../../api/fake"
 
-export const fetchOrders = async ({
-  pageParam: offset,
-}: {
-  pageParam: number
-}) => {
-  const data = await api.getOrders(API.limit, offset)
+export const fetchOrders = async () => {
+  const data = await api.getOrders()
 
   return data
 }
