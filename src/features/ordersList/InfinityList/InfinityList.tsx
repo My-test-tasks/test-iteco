@@ -81,6 +81,7 @@ export const InfinityList = () => {
     <Virtuoso
       style={{ height: "100%" }}
       data={filteredData}
+      data={data?.orders}
       useWindowScroll
       itemContent={(idx, order) => <OrderListItem key={idx} order={order} />}
       components={components}
