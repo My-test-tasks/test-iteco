@@ -12,6 +12,16 @@ import "@fontsource/roboto/cyrillic-700.css"
 
 import "./assets/styles/main.css"
 
+//Fix 'findDOMNode' warning in ant design
+const consoleError = console.error.bind(console)
+console.error = (errObj, ...args) => {
+  if (typeof errObj === "string" && args.includes("findDOMNode")) {
+    return
+  }
+  consoleError(errObj, ...args)
+}
+//end fix
+
 const container = document.getElementById("root")
 
 const queryClient = new QueryClient()
