@@ -11,6 +11,7 @@ export const GridView: GridComponents["List"] = forwardRef(
         flexWrap: "wrap",
         justifyContent: "center",
         gap: 15,
+        marginTop: 16,
         ...style,
       }}
     >

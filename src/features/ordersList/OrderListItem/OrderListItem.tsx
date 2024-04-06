@@ -7,7 +7,6 @@ import {
   Divider as AntDivider,
   Tooltip,
 } from "antd"
-
 import {} from "antd"
 import { formatedDate } from "../../../utils/date"
 
@@ -24,7 +23,13 @@ type Props = {
 const { Text: AntText } = Typography
 
 const Card = styled(AntCard)`
-  margin: 8px 0;
+  min-height: 139px;
+  margin: 16px 0;
+  border-radius: 16px;
+
+  &&& > div {
+    padding: 22px 32px 22px;
+  }
 `
 
 const Divider = styled(AntDivider)`
@@ -37,6 +42,22 @@ const Text: FC<TextProps> = styled(AntText)`
   &&& {
     color: ${props => props.type === "secondary" && "#818281"};
     color: ${props => props.type === "danger" && "#017B59"};
+    font-size: ${props => (props.strong ? "18px" : "16px")};
+    font-weight: ${props => (props.strong ? "500" : "400")};
+  }
+`
+
+const TextPrice: FC<TextProps> = styled(Text)`
+  &&& {
+    font-size: 20px;
+    font-weight: 500;
+  }
+`
+
+const TextFuel: FC<TextProps> = styled(Text)`
+  &&& {
+    font-size: 14px;
+    font-weight: 400;
   }
 `
 
@@ -48,8 +69,8 @@ const QuestionIcon = styled(QuestionCircleOutlined)`
 export const OrderListItem: FC<Props> = ({ order }) => {
   return (
     <Card bordered hoverable>
-      <Flex gap="middle">
-        <Flex vertical gap="middle" style={{ minWidth: 320 }}>
+      <Flex gap={8}>
+        <Flex vertical gap={6} style={{ minWidth: 320 }}>
           <Space direction="horizontal">
             <Text strong>{order.from.city}</Text>
             <Text type="secondary">{order.from.region}</Text>
@@ -71,8 +92,8 @@ export const OrderListItem: FC<Props> = ({ order }) => {
 
         <Divider type="vertical" />
 
-        <Flex gap="middle" justify="space-between" style={{ width: "100%" }}>
-          <Flex vertical gap="middle">
+        <Flex justify="space-between" style={{ width: "100%" }}>
+          <Flex vertical gap={8}>
             <Text strong>{order.cargo}</Text>
             <Text type="secondary">{`${order.weight} т. / ${order.size.min}-${order.size.max} м3`}</Text>
             <Space direction="horizontal">
@@ -81,7 +102,7 @@ export const OrderListItem: FC<Props> = ({ order }) => {
             </Space>
           </Flex>
 
-          <Flex vertical gap="middle">
+          <Flex vertical gap={8}>
             <Text type="secondary">{`№${order.number}`}</Text>
             <Text type="secondary">{order.type}</Text>
           </Flex>
@@ -91,14 +112,13 @@ export const OrderListItem: FC<Props> = ({ order }) => {
 
         <Flex
           vertical
-          gap="middle"
           align="center"
           style={{ minWidth: 180, alignSelf: "center" }}
         >
-          <Text strong>{formatedPrice(order.price.full)}</Text>
+          <TextPrice strong>{formatedPrice(order.price.full)}</TextPrice>
           <Tooltip title="Дополнительно, на ГСМ">
             <QuestionIcon />
-            <Text type="secondary">{` ГСМ: ${formatedPrice(order.price.fuel)}`}</Text>
+            <TextFuel type="secondary">{` ГСМ: ${formatedPrice(order.price.fuel)}`}</TextFuel>
           </Tooltip>
         </Flex>
       </Flex>

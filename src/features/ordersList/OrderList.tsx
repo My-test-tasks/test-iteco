@@ -5,7 +5,7 @@ import { InfinityList } from "./InfinityList"
 
 export const OrderList = () => {
   return (
-    <Flex vertical gap={12} style={{ width: 1110, height: "100vh" }}>
+    <Flex vertical gap={16} style={{ width: 1110, height: "100vh" }}>
       <FilterPanel />
 
       <InfinityList />

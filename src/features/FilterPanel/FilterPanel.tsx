@@ -1,9 +1,9 @@
 import {
   Button as AntButton,
-  DatePicker,
+  DatePicker as AntDatePicker,
   Flex,
   FloatButton,
-  Input,
+  Input as AntInput,
   Form as AntForm,
 } from "antd"
 import { Typography } from "antd"
@@ -26,23 +26,47 @@ const { Title: AntTitle } = Typography
 
 const Form = styled(AntForm)`
   display: flex;
-  gap: 32px;
+  gap: 24px;
   margin-top: 24px;
   padding: 32px;
   border: 1px solid #f0f0f0;
-  border-radius: 8px;
+  border-radius: 16px;
+`
+
+const FormItem = styled(AntForm.Item)`
+  margin: 0;
 `
 
 const Title = styled(AntTitle)`
-  margin: 0;
+  &&& {
+    margin: 0;
+    letter-spacing: -1.2px;
+  }
+`
+
+const Path = styled(Flex)`
+  position: relative;
+  gap: 18px;
+`
+
+const Input = styled(AntInput)`
+  height: 48px;
+`
+
+const SwapButton = styled(FloatButton)`
+  position: absolute;
+  top: 4px;
+  right: calc(50% - 20px);
 `
 
 const ResetButton = styled(AntButton)`
   &&& {
-    width: 170px;
-    height: 56px;
+    width: 144px;
+    height: 50px;
+    padding: 0;
     align-self: flex-end;
     color: #818281;
+    font-size: 16px;
     text-decoration: underline;
   }
 
@@ -55,28 +79,32 @@ const ResetButton = styled(AntButton)`
   }
 `
 
+const DatePicker = styled(AntDatePicker)`
+  width: 100%;
+  height: 48px;
+`
+
 const SearchButton = styled(AntButton)`
   &&& {
+    margin-top: 5px;
     height: 56px;
     background-color: #ff9a19;
     text-transform: uppercase;
     font-weight: 700;
+    letter-spacing: -1px;
   }
 
   &&&&:hover {
     background-color: #ff9a19c2;
   }
-`
 
-const Path = styled(Flex)`
-  position: relative;
-  gap: 28px;
-`
+  &&&&:disabled {
+    background-color: #f8f8f8;
+  }
 
-const SwapButton = styled(FloatButton)`
-  position: absolute;
-  top: 0;
-  right: calc(50% - 20px);
+  &&&&:disabled:hover {
+    background-color: #f8f8f8;
+  }
 `
 
 export const FilterPanel = () => {
@@ -112,27 +140,27 @@ export const FilterPanel = () => {
 
   return (
     <Form onFinish={handlerSubmit}>
-      <Flex vertical gap={24}>
+      <Flex vertical gap={32} style={{ marginTop: 10 }}>
         <Title level={4}>Поиск грузов</Title>
 
         <Path>
-          <Form.Item
+          <FormItem
             validateStatus={
               formik.touched.from && formik.errors.from ? "error" : "success"
             }
             help={formik.touched.from && formik.errors.from}
           >
             <Input
-              size="large"
               placeholder="Откуда"
               style={{ width: 367 }}
+              allowClear
               value={formik.values.from}
               onChange={e => {
                 formik.setFieldTouched("from")
                 formik.setFieldValue("from", e.target.value)
               }}
             />
-          </Form.Item>
+          </FormItem>
 
           <SwapButton
             icon={<SwapOutlined />}
@@ -140,23 +168,23 @@ export const FilterPanel = () => {
             onClick={handlerSwap}
           />
 
-          <Form.Item
+          <FormItem
             validateStatus={
               formik.touched.to && formik.errors.to ? "error" : "success"
             }
             help={formik.touched.to && formik.errors.to}
           >
             <Input
-              size="large"
               placeholder="Куда"
               style={{ width: 367 }}
+              allowClear
               value={formik.values.to}
               onChange={e => {
                 formik.setFieldTouched("to")
                 formik.setFieldValue("to", e.target.value)
               }}
             />
-          </Form.Item>
+          </FormItem>
         </Path>
 
         <ResetButton
@@ -170,24 +198,24 @@ export const FilterPanel = () => {
       </Flex>
 
       <Flex vertical gap={24} style={{ width: 270 }}>
-        <Form.Item
+        <FormItem
           validateStatus={
             formik.touched.number && formik.errors.number ? "error" : "success"
           }
           help={formik.touched.number && formik.errors.number}
         >
           <Input
-            size="large"
             placeholder="№ заказа"
             value={formik.values.number}
+            allowClear
             onChange={e => {
               formik.setFieldTouched("number")
               formik.setFieldValue("number", e.target.value)
             }}
           />
-        </Form.Item>
+        </FormItem>
 
-        <Form.Item
+        <FormItem
           validateStatus={
             formik.touched.date && formik.errors.date ? "error" : "success"
           }
@@ -195,7 +223,6 @@ export const FilterPanel = () => {
         >
           <DatePicker
             placeholder="Дата погрузки"
-            size="large"
             format={dateFormat}
             value={formik.values.date}
             onChange={date => {
@@ -203,7 +230,7 @@ export const FilterPanel = () => {
               formik.setFieldValue("date", date)
             }}
           />
-        </Form.Item>
+        </FormItem>
 
         <SearchButton
           type="primary"

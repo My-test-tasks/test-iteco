@@ -2,8 +2,8 @@ import { fakerRU as faker } from "@faker-js/faker"
 import { API } from "./config"
 
 type City = {
-  City: string
-  Region: string
+  city: string
+  region: string
 }
 
 type Distance = {
@@ -47,12 +47,12 @@ function createRandomOrder(): Order {
     _id: faker.string.uuid(),
     number: `А${faker.string.numeric(7)}`,
     from: {
-      City: faker.location.city(),
-      Region: faker.location.county(),
+      city: faker.location.city(),
+      region: faker.location.county(),
     },
     to: {
-      City: faker.location.city(),
-      Region: faker.location.county(),
+      city: faker.location.city(),
+      region: faker.location.county(),
     },
     distance: {
       basic: faker.number.int({ min: 10, max: 999 }),
