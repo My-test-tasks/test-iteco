@@ -3,7 +3,7 @@ import styled from "styled-components"
 
 const Alert = styled(AntAlert)`
   height: 75px;
-  margin: 8px 16px 32px;
+  margin-top: 16px;
 `
 
 export const Spiner = () => {

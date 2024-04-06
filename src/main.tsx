@@ -6,6 +6,9 @@ import { store } from "./store"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ConfigProvider } from "antd"
 import locale from "antd/locale/ru_RU"
+import "@fontsource/roboto/cyrillic-400.css"
+import "@fontsource/roboto/cyrillic-500.css"
+import "@fontsource/roboto/cyrillic-700.css"
 
 import "./assets/styles/main.css"
 
@@ -24,6 +27,7 @@ if (container) {
             locale={locale}
             theme={{
               token: {
+                fontFamily: "Roboto, sans-serif",
                 fontSize: 16,
                 colorText: "#404140",
               },
