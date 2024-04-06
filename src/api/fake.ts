@@ -42,9 +42,9 @@ interface Result {
   orders: Order[]
 }
 
-function createRandomOrder(id?: number): Order {
+function createRandomOrder(): Order {
   return {
-    _id: String(id) ?? faker.string.uuid(),
+    _id: faker.string.uuid(),
     number: `А${faker.string.numeric(7)}`,
     from: {
       City: faker.location.city(),
@@ -79,7 +79,7 @@ const createOrders = (amount = 10000) => {
   const start = Date.now()
 
   for (let i = 0; i < amount; i++) {
-    const order = createRandomOrder(i) // id по порядку для дебага
+    const order = createRandomOrder()
     result.push(order)
   }
 

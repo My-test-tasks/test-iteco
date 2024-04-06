@@ -15,6 +15,7 @@ import type { FC } from "react"
 import type { Order } from "../../../api/fake"
 import type { TextProps } from "antd/lib/typography/Text"
 import { QuestionCircleOutlined } from "@ant-design/icons"
+import { formatedPrice } from "../../../utils/price"
 
 type Props = {
   order: Order
@@ -50,12 +51,12 @@ export const OrderListItem: FC<Props> = ({ order }) => {
       <Flex gap="middle">
         <Flex vertical gap="middle" style={{ minWidth: 320 }}>
           <Space direction="horizontal">
-            <Text strong>{order.from.City}</Text>
-            <Text type="secondary">{order.from.Region}</Text>
+            <Text strong>{order.from.city}</Text>
+            <Text type="secondary">{order.from.region}</Text>
           </Space>
           <Space direction="horizontal">
-            <Text strong>{order.to.City}</Text>
-            <Text type="secondary">{order.to.Region}</Text>
+            <Text strong>{order.to.city}</Text>
+            <Text type="secondary">{order.to.region}</Text>
           </Space>
           <Space direction="horizontal">
             <Text type="secondary">Расстояние:</Text>
@@ -94,10 +95,10 @@ export const OrderListItem: FC<Props> = ({ order }) => {
           align="center"
           style={{ minWidth: 180, alignSelf: "center" }}
         >
-          <Text strong>{`${order.price.full} ₽`}</Text>
+          <Text strong>{formatedPrice(order.price.full)}</Text>
           <Tooltip title="Дополнительно, на ГСМ">
             <QuestionIcon />
-            <Text type="secondary">{` ГСМ: ${order.price.fuel} ₽`}</Text>
+            <Text type="secondary">{` ГСМ: ${formatedPrice(order.price.fuel)}`}</Text>
           </Tooltip>
         </Flex>
       </Flex>

@@ -9,3 +9,9 @@ export const formatedDate = (date: dayjs.ConfigType) => {
 
   return dayjs(date).format(`${dateFormat} ${timeFormat}`)
 }
+
+export const formatedDateWithoutTime = (date: dayjs.ConfigType) => {
+  dayjs.locale(ru)
+
+  return dayjs(date).format(`${dateFormat}`)
+}
